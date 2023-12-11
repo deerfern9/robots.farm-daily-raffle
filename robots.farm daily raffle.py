@@ -37,7 +37,7 @@ def get_free_ticket(private: str) -> None:
             'to': web3.to_checksum_address('0xC91AAacC5adB9763CEB57488CC9ebE52C76A2b05'),
             'value': 0,
             'gasPrice': web3.eth.gas_price,
-            'gas': 695_446,
+            'gas': random.randint(600_000, 700_000),
             'data': '0xc002c4d6',
             'nonce': web3.eth.get_transaction_count(address),
             'chainId': web3.eth.chain_id
@@ -47,7 +47,7 @@ def get_free_ticket(private: str) -> None:
         tx_hash = web3.eth.send_raw_transaction(tx_create.rawTransaction)
         write_to_file('hashes.txt', tx_hash.hex())
         logger.success(f'{address} | Transaction done: {tx_hash.hex()}')
-        time.sleep(*delay)
+        time.sleep(random.randint(*delay))
     except Exception as e:
         logger.exception(e)
         write_to_file('errors.txt', f'{address};{private};{e}')
